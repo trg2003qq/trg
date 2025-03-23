@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض موقعي الجغرافي</title>
+</head>
+<body>
+
+    <h1>موقعي الجغرافي</h1>
+    <button onclick="getLocation()">اعرض موقعي</button>
+    <p id="location"></p>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("location").innerHTML = "الموقع الجغرافي غير مدعوم في هذا المتصفح.";
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById("location").innerHTML = 
+                "خط العرض: " + position.coords.latitude + 
+                "<br>خط الطول: " + position.coords.longitude;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "تم رفض طلب الموقع الجغرافي.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "المعلومات الجغرافية غير متوفرة.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "انتهت مهلة طلب الموقع.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "حدث خطأ غير معروف.";
+                    break;
+            }
+        }
+    </script>
+
+</body>
+</html>
